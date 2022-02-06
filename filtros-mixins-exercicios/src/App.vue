@@ -39,7 +39,10 @@ export default {
 			cpfDoAluno: '60070080090',
 			frutas: ['abacate']
 		}
-	}
+	},
+    created() {
+        console.log('Created - App Vue!')
+    }
 }
 </script>
 
