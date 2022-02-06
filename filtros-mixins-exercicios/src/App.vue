@@ -18,9 +18,11 @@
 
 <script>
 import Frutas from './Frutas.vue'
+import frutasMixin from './FrutasMixin'
 
 export default {
 	components: {Frutas},
+	mixins: [frutasMixin],
 	filters: {
 		cpf(valor) {
 			const arr = valor.split('')
@@ -33,16 +35,9 @@ export default {
 	data() {
 		return {
 			cpfDoAluno: '60070080090',
-			fruta: '',
-            frutas: ['banana', 'maça', 'laranja']
+			frutas: ['abacate']
 		}
-	},
-    methods: {
-        add() {
-            this.frutas.push(this.fruta)
-            this.fruta = ''
-        }
-     }
+	}
 }
 </script>
 
