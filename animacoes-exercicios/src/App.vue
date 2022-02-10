@@ -39,19 +39,35 @@
 			@leave-cancelled="leaveCancelled">
 			<div class="caixa" v-if="exibir2"></div>
 		</transition>
+
+		<hr>
+		<div class="mb-4">
+			<b-button class="mr-2" variant="primary" @click="componenteSelecionado = 'AlertaInfo'">Info</b-button>
+			<b-button class="mr-2" variant="secondy" @click="componenteSelecionado = 'AlertaAdvertencia'">Advertencia</b-button>
+		</div>
+		<transition name="fade" mode="out-in">
+			<component :is="componenteSelecionado">
+
+			</component>
+		</transition>
+		
 	</div>
 </template>
 
 <script>
+import AlertaAdvertencia from './AlertaAdvertencia.vue'
+import AlertaInfo from './AlertaInfo.vue'
 
 export default {
+	components: {AlertaAdvertencia, AlertaInfo},
 	data() {
 		return {
 			msg: 'Uma mensagem de informação para o usuário!',
 			exibir: false,
 			exibir2: true,
 			tipoAnimacao: 'fade',
-			larguraBase: 0
+			larguraBase: 0,
+			componenteSelecionado: 'AlertaInfo'
 		}
 	},
 	methods: {
