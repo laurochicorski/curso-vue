@@ -10,6 +10,11 @@
 		<transition name="slide" type="animation" appear>
 			<b-alert variant="info" show v-show="exibir">{{ msg }}</b-alert>	
 		</transition>
+		<transition 
+			enter-active-class="animated bounce"
+			leave-active-class="animated shake">
+			<b-alert variant="info" show v-show="exibir">{{ msg }}</b-alert>	
+		</transition>
 	</div>
 </template>
 
@@ -19,7 +24,7 @@ export default {
 	data() {
 		return {
 			msg: 'Uma mensagem de informação para o usuário!',
-			exibir: true
+			exibir: false
 		}
 	}
 }
