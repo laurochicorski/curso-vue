@@ -25,7 +25,7 @@
 			<b-alert variant="warning" show v-else key="warning">{{ msg }}</b-alert>
 		</transition>
 
-		<button @click="exibir2 = !exibir2">Mostrar</button>
+		<button @click="exibir2 = !exibir2">Alternar</button>
 		<transition
 			:css="false"
 			@before-enter="beforeEnter"
@@ -50,16 +50,29 @@ export default {
 			msg: 'Uma mensagem de informação para o usuário!',
 			exibir: false,
 			exibir2: true,
-			tipoAnimacao: 'fade'
+			tipoAnimacao: 'fade',
+			larguraBase: 0
 		}
 	},
 	methods: {
+		animar(el, done, negativo) {
+			let rodada = 1
+			const temporizador = setInterval(() => {
+				const novaLargura = this.larguraBase + (negativo ? -rodada * 10 : rodada * 10)
+				el.style.width = `${novaLargura}px`
+				rodada++
+				if (rodada > 30) {
+					clearInterval(temporizador)
+					done()
+				}
+			}, 20)
+		},
 		beforeEnter(el) {
-			console.log('beforeEnter')
+			this.larguraBase = 0
+			el.style.width = `${this.larguraBase}px`
 		},
 		enter(el, done) {
-			console.log('enter')
-			done()
+			this.animar(el, done, false)
 		},
 		afterEnter(el) {
 			console.log('afterEnter')
@@ -68,11 +81,11 @@ export default {
 			console.log('enterCancelled')
 		},
 		beforeLeave(el) {
-			console.log('beforeLeave')
+			this.larguraBase = 300
+			el.style.width = `${this.larguraBase}px`
 		},
 		leave(el, done) {
-			console.log('afterLeave')
-			done()
+			this.animar(el, done, true)
 		},
 		afterLeave(el) {
 			console.log('afterLeave')
