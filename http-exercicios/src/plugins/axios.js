@@ -9,5 +9,11 @@ Vue.use({
         Vue.prototype.$http = axios.create({
             baseURL: 'https://curso-vue-c8b42-default-rtdb.firebaseio.com/'
         })
+
+        Vue.prototype.$http.interceptors.request.use(config => {
+            console.log(config.method)
+
+            return config
+        })
     }
 })
