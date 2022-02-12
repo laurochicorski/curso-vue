@@ -14,6 +14,7 @@
 					placeholder="Informe o E-mail">
 				</b-form-input>
 			</b-form-group>
+			<span>{{ id }}</span>
 			<hr>
 			<b-button @click="salvar" size="lg" variant="primary">Salvar</b-button>
 			<b-button @click="obterUsuarios" size="lg" variant="success" class="ml-2">Obter Usuários</b-button>
@@ -22,7 +23,9 @@
 			<b-list-group-item v-for="(usuario,id) in usuarios" :key="id">
 				<strong>Nome: </strong> {{ usuario.nome }}<br>
 				<strong>E-mail: </strong> {{ usuario.email }}<br>
-				<strong>ID: </strong> {{ id }}
+				<strong>ID: </strong> {{ id }}<br>
+				<b-button variant="warning" size="lg" @click="carregar(id)">Carregar</b-button>
+				<b-button variant="danger" size="lg" @click="excluir(id)" class="ml-2">Excluir</b-button>
 			</b-list-group-item>
 		</b-list-group>
 	</div>
@@ -36,23 +39,36 @@ export default {
 				nome: '',
 				email: ''
 			},
+			id: null,
 			usuarios: []
 		}
 		
 	},
 	methods: {
 		salvar() {
-			this.$http.post('usuarios.json', this.usuario)
-				.then(resp => {
-					this.usuario.nome = ''
-					this.usuario.email = ''
-				})
+			const metodo = this.id ? 'patch' : 'post'
+			const finalUrl = this.id ? `/${this.id}.json` : '.json'
+
+			this.$http[metodo](`/usuarios${finalUrl}`, this.usuario)
+			.then(_ => this.limpar())
 		},
 		obterUsuarios() {
 			this.$http('usuarios.json')
 				.then(res => {
 					this.usuarios = res.data
 				})
+		},
+		limpar() {
+			this.usuario.nome = ''
+			this.usuario.email = ''
+			this.id = null
+		},
+		carregar(id) {
+			this.id = id
+			this.usuario = { ... this.usuarios[id] }
+		},
+		excluir(id) {
+			this.$http.delete(`/usuarios/${id}.json`).then(_ => this.limpar())
 		}	
 	}
 	// created() {
