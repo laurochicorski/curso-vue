@@ -38,5 +38,8 @@ export default new Router({
     }, {
         path: '/redicionar',
         redirect: '/usuario'
+    }, {
+        path: '*',
+        redirect: '/'
     } ]
 })
