@@ -25,7 +25,8 @@ export default new Router({
         // component: Usuario,
         components: {
             default: Usuario,
-            menu: MenuAlt
+            menu: MenuAlt,
+            menuInferior: MenuAlt
         },
         props: true,
         children: [
@@ -34,5 +35,8 @@ export default new Router({
             { path : ':id/editar', component: UsuarioEditar, props: true ,
                 name: 'editarUsuario'}
         ]
-    }, ]
+    }, {
+        path: '/redicionar',
+        redirect: '/usuario'
+    } ]
 })
