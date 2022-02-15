@@ -14,7 +14,13 @@
 
 <script>
 export default {
-  props: ['id']
+  props: ['id'],
+  beforeRouteEnter(to, from, next) {
+    console.log('Dentro do componente Detalhe')
+    next(vm => {
+      console.log(vm.id)
+    })
+  }
 }
 </script>
 
