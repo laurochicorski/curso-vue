@@ -18,7 +18,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     console.log('Dentro do componente Detalhe')
     next(vm => {
-      console.log(vm.id)
+      console.log('Dentro')
     })
   }
 }
